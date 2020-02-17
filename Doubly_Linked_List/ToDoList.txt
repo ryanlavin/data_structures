@@ -1,0 +1,8 @@
+Go grocery shopping
+Apply for job
+Play soccer
+Eat food
+Finish doubly LL implementation
+Plan out various data structure implementations
+Drink water
+Add more lines to "ToDoList.txt"
