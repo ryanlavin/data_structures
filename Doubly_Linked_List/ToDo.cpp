@@ -37,29 +37,28 @@ void LinkedList::read_file(const char* filePath){
 		throw "Error opening file, please try again later";
 		return;
 	}
-	
 	while (std::getline(stream, line)) {
-		LinkedList::createItem(line);
-		//(*next).push_back(line);
+		std::cout << line << "   ";
+		LinkedList::push_back(line);
 	}
 }
 
 void LinkedList::push_back(std::string line){
 	item* newItem = createItem(line);
 	if(tail_ == NULL){
+		std::cout << "Tail was null" << std::endl;
 		tail_ = newItem;	
 	}
 	else{
+		std::cout << "Tail was not null   " << newItem << std::endl;
 		tail_->next = newItem;
 		newItem->prev = tail_;
-		tail_ = newItem;
 	}
 	size++;	
 }
 
 item* LinkedList::createItem(std::string line){
 	item* item = new struct item;
-	std::cout << line << std::endl;
 	item->next = NULL;
 	item->prev = NULL;
 	item->task = line;
