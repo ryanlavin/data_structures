@@ -20,6 +20,8 @@ public:
 	//void append(struct item* head_ref, std::string line);
 	void read_file(const char* filePath, T line);
 	class item<T>* createItem(T line);	
+	void pop_front(T line);
+	void read_list(/*item<T>* head*/);
 	//void insert();
 	//void traverse(item*);
 	//void append();
@@ -80,7 +82,7 @@ void DLList<T>::read_file(const char* filePath, T line){
 		return;
 	}
 	while (std::getline(stream, line)) {
-		std::cout << line << "   ";
+		//std::cout << line << "   ";
 		DLList<T>::push_back(line);
 	}
 	std::cout << "push_back over" << std::endl;
@@ -92,29 +94,72 @@ template <typename T>
 void DLList<T>::push_back(T line){
 
 	item<T>* newItem = this->createItem(line);
-	if (tail_ == NULL) {
-		std::cout << "Tail was null" << std::endl;
+	if(head_ == NULL) { 
+		head_ = newItem;
+		tail_ = head_;
+		std::cout << "Head iss null" << std::endl;
+		this->size++;
+		std::cout << "size: " << size << " line: " << newItem->task << std::endl;
+		return;
+	}
+	else if(head_->next == NULL) {
+		head_->next = newItem;
+		this->size++;
+		return;
+	}
+	else if (tail_ == NULL) {
+		//std::cout << "Tail was null" << std::endl;
 		tail_ = newItem;	
 	}
 	else {
-		std::cout << "Tail was not null   " << newItem << std::endl;
+		//std::cout << "Tail was not null   " << newItem << std::endl;
 		tail_->next = newItem;
 		newItem->prev = tail_;
 	}
 	size++;	
-	std::cout << "Size: " << size << std::endl;
+	//std::cout << "Size: " << size << std::endl;
 }
-
 
 
 template <typename T> 
 item<T>* DLList<T>::createItem(T line){
+	
 	item<T>* itemm = new item<T>; //rando; // used to have struct after new
 	itemm->next = NULL;
 	itemm->prev = NULL;
-	T* task = &line;
+	itemm->task  = line;
 	return itemm;
 }
+
+
+template <typename T> 
+void DLList<T>::pop_front(T line){
+	if(this->head_ == NULL){
+		std::cout << "Head is null" << std::endl;
+		return;
+	}
+	std::cout << "Old head " << (head_->next) << std::endl;
+	item<T> *old_head = this->head_->next;
+	delete this->head_;
+	this->head_ = old_head;
+	this->size--;
+}
+
+
+template <typename T> 
+void DLList<T>::read_list(/*item<T>* head_*/){
+	if(this->head_ == NULL){
+		std::cout << "Head is null" << std::endl;
+		return;
+	}
+	else{
+		std::cout << "1" << std::endl;
+		this->head_ = head_->next;
+		this->read_list();
+	}
+}
+	
+
 
 /*
 void LinkedList::append(item* head_ref, std::string line){
