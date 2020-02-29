@@ -98,15 +98,33 @@ void DLList<T>::push_back(T line){
 		head_ = newItem;
 		tail_ = head_;
 		std::cout << "Head iss null" << std::endl;
+		std::cout << head_->task << std::endl;
 		this->size++;
-		std::cout << "size: " << size << " line: " << newItem->task << std::endl;
-		return;
+		//std::cout << "size: " << size << " line: " << newItem->task << std::endl;
+		//return;
 	}
 	else if(head_->next == NULL) {
 		head_->next = newItem;
+		std::cout << head_->next->task << std::endl;
+		tail_->prev = head_->next;
 		this->size++;
-		return;
+		//return;
 	}
+	else{
+		item<T>* temp = head_->next;
+		while(temp->next != NULL){
+			temp = temp->next;
+		}
+		tail_->prev = temp;
+		std::cout << temp->task << std::endl;
+		this->size++;
+		tail_->next = NULL;
+
+	}
+
+
+
+/*
 	else if (tail_ == NULL) {
 		//std::cout << "Tail was null" << std::endl;
 		tail_ = newItem;	
@@ -116,6 +134,8 @@ void DLList<T>::push_back(T line){
 		tail_->next = newItem;
 		newItem->prev = tail_;
 	}
+
+*/
 	size++;	
 	//std::cout << "Size: " << size << std::endl;
 }
@@ -134,8 +154,8 @@ item<T>* DLList<T>::createItem(T line){
 
 template <typename T> 
 void DLList<T>::pop_front(T line){
-	if(this->head_ == NULL){
-		std::cout << "Head is null" << std::endl;
+	if(head_ == NULL){
+		std::cout << "HHead is null" << std::endl;
 		return;
 	}
 	std::cout << "Old head " << (head_->next) << std::endl;
@@ -148,14 +168,21 @@ void DLList<T>::pop_front(T line){
 
 template <typename T> 
 void DLList<T>::read_list(/*item<T>* head_*/){
-	if(this->head_ == NULL){
+	//std::cout << this->tail_->task << " is the tail" <<  std::endl;
+	if(head_ == NULL){
 		std::cout << "Head is null" << std::endl;
 		return;
 	}
 	else{
-		std::cout << "1" << std::endl;
-		this->head_ = head_->next;
-		this->read_list();
+		item<T>* temp = head_;
+		while(temp->next != NULL) {
+			std::cout << temp->task << "   || and the size is: " << size  << std::endl;
+			std::cout << temp->next->task << std::endl;
+			temp = temp->next;
+		}
+		//std::cout << "1" << std::endl;
+		//this->head_ = head_->next;
+		//this->read_list();
 	}
 }
 	
