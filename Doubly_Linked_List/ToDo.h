@@ -96,29 +96,41 @@ void DLList<T>::push_back(T line){
 	item<T>* newItem = this->createItem(line);
 	if(head_ == NULL) { 
 		head_ = newItem;
-		tail_ = head_;
-		std::cout << "Head iss null" << std::endl;
+		tail_->prev = head_;
+		head_->next = NULL;
+		head_->prev = NULL;
+		std::cout << "Head was null:   ";
 		std::cout << head_->task << std::endl;
 		this->size++;
+		return;
 		//std::cout << "size: " << size << " line: " << newItem->task << std::endl;
 		//return;
 	}
 	else if(head_->next == NULL) {
 		head_->next = newItem;
-		std::cout << head_->next->task << std::endl;
-		tail_->prev = head_->next;
+		newItem->prev = head_;
+		tail_->prev = newItem;
+		newItem->next = tail_;
+		tail_->next = NULL;
+		std::cout << "Head->next was null:   ";
+		std::cout << newItem->task << std::endl;
 		this->size++;
-		//return;
+		return;
 	}
 	else{
-		item<T>* temp = head_->next;
-		while(temp->next != NULL){
+		//item<T>* temp = head_->next;
+		std::cout << "Third case" << std::endl;
+		newItem = tail_;
+		tail_->prev = newItem;
+		tail_->next = NULL;
+		std::cout << newItem->task << std::endl;
+/*
+		while(temp->next != NULL) { 
+			std::cout << "Searching, currently on: " << temp->task << std::endl;
 			temp = temp->next;
 		}
-		tail_->prev = temp;
-		std::cout << temp->task << std::endl;
+*/
 		this->size++;
-		tail_->next = NULL;
 
 	}
 
@@ -144,7 +156,7 @@ void DLList<T>::push_back(T line){
 template <typename T> 
 item<T>* DLList<T>::createItem(T line){
 	
-	item<T>* itemm = new item<T>; //rando; // used to have struct after new
+	item<T>* itemm = new item<T>;
 	itemm->next = NULL;
 	itemm->prev = NULL;
 	itemm->task  = line;
