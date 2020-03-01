@@ -94,11 +94,14 @@ template <typename T>
 void DLList<T>::push_back(T line){
 
 	item<T>* newItem = this->createItem(line);
-	if(head_ == NULL) { 
+	if(head_ == NULL && tail_ == NULL) { 
+		//newItem->next = head_->next;
 		head_ = newItem;
-		tail_->prev = head_;
-		head_->next = NULL;
-		head_->prev = NULL;
+		//tail_->prev = head_;
+		tail_ = newItem;
+		newItem->next = NULL;
+		newItem->prev = NULL;
+		
 		std::cout << "Head was null:   ";
 		std::cout << head_->task << std::endl;
 		this->size++;
@@ -110,8 +113,7 @@ void DLList<T>::push_back(T line){
 		head_->next = newItem;
 		newItem->prev = head_;
 		tail_->prev = newItem;
-		newItem->next = tail_;
-		tail_->next = NULL;
+		tail_ = newItem->next;
 		std::cout << "Head->next was null:   ";
 		std::cout << newItem->task << std::endl;
 		this->size++;
@@ -119,10 +121,11 @@ void DLList<T>::push_back(T line){
 	}
 	else{
 		//item<T>* temp = head_->next;
-		std::cout << "Third case" << std::endl;
-		newItem = tail_;
-		tail_->prev = newItem;
-		tail_->next = NULL;
+		tail_ = newItem;	
+		tail_->prev = newItem->prev;
+		tail_->prev = newItem->next;
+		//tail_->prev = newItem;
+		//tail_->next = NULL;
 		std::cout << newItem->task << std::endl;
 /*
 		while(temp->next != NULL) { 
