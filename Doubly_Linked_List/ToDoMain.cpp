@@ -5,9 +5,10 @@
 int main() {
 	DLList<std::string> superList;
 	std::string line;
-	//item* list;
 	superList.read_file("ToDoList.txt", line);
-//	superList.pop_front(line);
-//	superList.read_list();
+	superList.read_list();
+	superList.pop_back();
+	superList.read_list();
+	superList.~DLList();
 	return 0;
 }

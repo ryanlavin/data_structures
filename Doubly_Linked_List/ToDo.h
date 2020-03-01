@@ -20,8 +20,9 @@ public:
 	//void append(struct item* head_ref, std::string line);
 	void read_file(const char* filePath, T line);
 	class item<T>* createItem(T line);	
-	void pop_front(T line);
-	void read_list(item<T>* head);
+	void pop_front();
+	void pop_back();
+	void read_list();
 	//void insert();
 	//void traverse(item*);
 	//void append();
@@ -45,12 +46,19 @@ DLList<T>::DLList(){
 template <typename T> 
 DLList<T>::~DLList(){
 
-	item<T>* current = this->head_;
-	item<T>* next;
+	item<T>* current;
+	//item<T>* next;
+/*
 	while(current != NULL){
 		next = current->next;
 		delete current;
 		current = next;
+	}
+*/
+	while(head_){
+		current = head_;
+		head_ = head_->next;
+		delete head_;
 	}
 
 /*
@@ -85,10 +93,8 @@ void DLList<T>::read_file(const char* filePath, T line){
 		//std::cout << line << "   ";
 		DLList<T>::push_back(line);
 	}
-	std::cout << "push_back over  & the size is: " << size << std::endl;
-	item<T>* rando = head_;
-
 /* For iteratively reading through the linked list
+	item<T>* rando = head_;
 	for(int i = 0; i < size; i++){
 		std::cout << rando->task << std::endl;
 		rando = rando->next;
@@ -106,49 +112,32 @@ void DLList<T>::push_back(T line){
 	if(head_ == NULL && tail_ == NULL) { 
 		head_ = newItem;
 		tail_ = newItem;
-		newItem->next = NULL;
-		newItem->prev = NULL;
-		
-		std::cout << "Head was null:   ";
+		head_->next = NULL;
+		//std::cout << "Head was null:   ";
 		this->size++;
-		std::cout << head_->task << "   And size: " << size << std::endl;
+		//std::cout << head_->task << "   And size: " << size << std::endl;
 		return;
 	}
 	else if(head_->next == NULL) {
 		head_->next = newItem;
 		newItem->prev = head_;
 		tail_ = newItem;
-		tail_->prev = head_;
-		std::cout << "Head->next was null:   ";
+		//std::cout << "Head->next was null:   ";
 		this->size++;
-		std::cout << newItem->task << "   And size: " << size << std::endl;
+		//std::cout << newItem->task << "   And size: " << size << std::endl;
 		return;
 	}
 	else{
 		tail_->next = newItem;
+		newItem->prev = tail_;
 		tail_ = newItem;
-		tail_->prev = newItem->prev;
+		newItem->next = NULL;
 		this->size++;
-		std::cout << newItem->task  << "   And size: " << size << std::endl;
+		//std::cout << newItem->prev->task << "   <- prev Node's task when size is: " << size << std::endl;
+		//std::cout << newItem->task  << "   And size: " << size << std::endl;
+	
 		return;
 	}
-
-
-
-/*
-	else if (tail_ == NULL) {
-		//std::cout << "Tail was null" << std::endl;
-		tail_ = newItem;	
-	}
-	else {
-		//std::cout << "Tail was not null   " << newItem << std::endl;
-		tail_->next = newItem;
-		newItem->prev = tail_;
-	}
-
-*/
-	size++;	
-	//std::cout << "Size: " << size << std::endl;
 }
 
 
@@ -164,45 +153,48 @@ item<T>* DLList<T>::createItem(T line){
 
 
 template <typename T> 
-void DLList<T>::pop_front(T line){
+void DLList<T>::pop_front(){
 	if(head_ == NULL){
 		std::cout << "HHead is null" << std::endl;
 		return;
 	}
-	std::cout << "Old head " << (head_->next) << std::endl;
-	item<T> *old_head = this->head_->next;
-	delete this->head_;
-	this->head_ = old_head;
+	item<T> *new_head = head_->next;
+	delete head_;
+	head_ = new_head;
 	this->size--;
+}
+
+template <typename T>
+void DLList<T>::pop_back(){
+	if(tail_ == NULL){
+		std::cout << "TTail is null" << std::endl;
+		return;
+	}
+	else if(tail_->prev == NULL){
+		std::cout << "TTail->prev is null" << std::endl;
+		return;
+	}
+	item<T> *new_tail = tail_->prev;
+	delete tail_;
+	tail_ = new_tail;
+	this->size--;	
+
 }
 
 
 template <typename T> 
-void DLList<T>::read_list(item<T>* head_){
-	std::cout << "Now beginning to read the list" << std::endl;
+void DLList<T>::read_list(){
 	if(head_ == NULL){
 		std::cout << "Head is null" << std::endl;
 		return;
 	}
 	else{
-		item<T>* temporary = head_;
-		while(temporary != NULL){
-			std::cout << temporary->task << std::endl;
-			temporary = temporary->next;
+		item<T>* temp = head_;
+		while(temp != NULL){
+			std::cout << temp->task << std::endl;
+			temp = temp->next;
 		}
 	}
-/*
-	else{
-		item<T>* temp = tail_;
-		temp->prev = tail_->prev;
-		while(temp->prev != NULL) {
-			std::cout << temp->task << "   || and the size is: " << size  << std::endl;
-			std::cout << temp->prev->task << std::endl;
-			temp = temp->prev;
-			std::cout << temp->prev->task << std::endl;
-		}
-	}
-*/
 }
 	
 
