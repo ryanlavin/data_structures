@@ -1,9 +1,9 @@
-Go grocery shopping
-Apply for job
-Play soccer
-Eat food
-Finish doubly LL implementation
-Plan out various data structure implementations
-Drink water
-Add more lines to "ToDoList.txt"
-Last line of the to do list.
+1. Go grocery shopping
+2. Apply for job
+3. Play soccer
+4. Eat food
+5. Finish doubly LL implementation
+6. Plan out various data structure implementations
+7. Drink water
+8. Add more lines to "ToDoList.txt"
+9. Last line of the to do list.

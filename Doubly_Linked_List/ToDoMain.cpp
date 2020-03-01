@@ -8,6 +8,6 @@ int main() {
 	//item* list;
 	superList.read_file("ToDoList.txt", line);
 //	superList.pop_front(line);
-	superList.read_list();
+//	superList.read_list();
 	return 0;
 }
