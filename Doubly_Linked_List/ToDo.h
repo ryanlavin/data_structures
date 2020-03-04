@@ -47,34 +47,12 @@ template <typename T>
 DLList<T>::~DLList(){
 
 	item<T>* current;
-	//item<T>* next;
-/*
-	while(current != NULL){
-		next = current->next;
-		delete current;
-		current = next;
-	}
-*/
-	while(head_){
+	while(head_ != NULL){
 		current = head_;
-		head_ = head_->next;
+		std::cout << head_->task << std::endl;
 		delete head_;
+		head_ = current->next;
 	}
-
-/*
-	for(int i = 0; i < size; i++){
-		std::cout << "Deleting line: " << i << std::endl;
-		if(head_ != tail_){
-			head_ = head_->next;
-			delete head_->prev;
-		}
-		else{
-			delete head_;
-			std::cout << "deleting head" << std::endl;
-			break;
-		}
-	}
-*/
 }
 
 
@@ -83,7 +61,6 @@ void DLList<T>::read_file(const char* filePath, T line){
 	
 	std::fstream stream;
 	std::stringstream current; 
-	//std::string line;
 	stream.open(filePath);
 	if (!stream) {
 		throw "Error opening file, please try again later";
@@ -93,14 +70,15 @@ void DLList<T>::read_file(const char* filePath, T line){
 		//std::cout << line << "   ";
 		DLList<T>::push_back(line);
 	}
-/* For iteratively reading through the linked list
+
+//For iteratively reading through the linked list
+/*	
 	item<T>* rando = head_;
 	for(int i = 0; i < size; i++){
 		std::cout << rando->task << std::endl;
 		rando = rando->next;
 	}
 */
-	//DLList<T>::read_list(this->head_);
 	return;
 }
 
@@ -133,9 +111,6 @@ void DLList<T>::push_back(T line){
 		tail_ = newItem;
 		newItem->next = NULL;
 		this->size++;
-		//std::cout << newItem->prev->task << "   <- prev Node's task when size is: " << size << std::endl;
-		//std::cout << newItem->task  << "   And size: " << size << std::endl;
-	
 		return;
 	}
 }
@@ -154,6 +129,7 @@ item<T>* DLList<T>::createItem(T line){
 
 template <typename T> 
 void DLList<T>::pop_front(){
+	
 	if(head_ == NULL){
 		std::cout << "HHead is null" << std::endl;
 		return;
@@ -164,26 +140,28 @@ void DLList<T>::pop_front(){
 	this->size--;
 }
 
+
 template <typename T>
 void DLList<T>::pop_back(){
+
 	if(tail_ == NULL){
-		std::cout << "TTail is null" << std::endl;
+		std::cout << "Tail is null" << std::endl;
 		return;
 	}
 	else if(tail_->prev == NULL){
-		std::cout << "TTail->prev is null" << std::endl;
+		std::cout << "Error" << std::endl;
 		return;
 	}
 	item<T> *new_tail = tail_->prev;
 	delete tail_;
 	tail_ = new_tail;
 	this->size--;	
-
 }
 
 
 template <typename T> 
 void DLList<T>::read_list(){
+
 	if(head_ == NULL){
 		std::cout << "Head is null" << std::endl;
 		return;
@@ -197,24 +175,4 @@ void DLList<T>::read_list(){
 	}
 }
 	
-
-
-/*
-void LinkedList::append(item* head_ref, std::string line){
-	if(head_ == NULL){
-		item* newItem = createItem(line);
-		head_ = newItem;
-	}
-	else if (head_->next == NULL){
-		item* newItem = createItem(line);
-		head_->next = newItem;
-	}
-	else {
-		append(head_->next, line);
-	}
-}
-*/
-
-
-
 
